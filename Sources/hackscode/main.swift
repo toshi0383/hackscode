@@ -11,16 +11,6 @@ let parameters = ProcessInfo.processInfo.arguments
 
 let removeBuildFileAction = "remove-build-files"
 
-if !parameters.contains(removeBuildFileAction) {
-    print(
-    """
-    Missing action. Specify one of those.
-      \(removeBuildFileAction)
-    """
-    )
-    exit(1)
-}
-
 for (index, param) in parameters.enumerated() {
     switch param {
     case "--version":
@@ -35,6 +25,16 @@ for (index, param) in parameters.enumerated() {
     default:
         break
     }
+}
+
+if !parameters.contains(removeBuildFileAction) {
+    print(
+    """
+    Missing action. Specify one of those.
+      \(removeBuildFileAction)
+    """
+    )
+    exit(1)
 }
 
 guard let keepNames = keepNames else {
