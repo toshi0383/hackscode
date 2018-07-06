@@ -17,9 +17,9 @@ bootstrap: build
 
 # Needs toshi0383/scripts to be added to cmdshelf's remote
 install:
-	$(cmdshelf) run swiftpm/install.sh toshi0383/UsefulCommandsForXcode
+	$(cmdshelf) run swiftpm/install.sh toshi0383/hackscode
 
 release:
 	rm -rf .build/release
 	swift build -c release -Xswiftc -static-stdlib
-	$(cmdshelf) run swiftpm/release.sh hackcode
+	$(cmdshelf) run swiftpm/release.sh hackscode
