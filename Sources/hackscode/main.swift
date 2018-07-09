@@ -79,7 +79,7 @@ let sourcesBuildPhase = target
 
 let shouldDelete: (PBXFileReference) -> Bool = { fileReference in
     let nameOrPath = fileReference.name ?? fileReference.path!
-    if let nameOrPath = fileReference.name, keepNames.contains(where: { nameOrPath.contains($0) }) {
+    if keepNames.contains(where: { nameOrPath.contains($0) }) {
         return false
     }
 
