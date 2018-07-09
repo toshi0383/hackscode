@@ -1,7 +1,7 @@
 import Foundation
 import xcodeproj
 
-let version = "0.1.1"
+let version = "0.1.2"
 
 var keepNames: [String]?
 var fromTarget: String?
