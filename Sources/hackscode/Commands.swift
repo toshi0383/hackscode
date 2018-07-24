@@ -8,41 +8,35 @@
 import Foundation
 import xcodeproj
 
-protocol CommandType {
-    func run() throws
-}
-
-struct CommandError: Error, CustomStringConvertible {
-    private let message: CustomStringConvertible
-    init(_ message: CustomStringConvertible) {
-        self.message = message
-    }
-
-    var description: String {
-        return "\(message)"
-    }
-}
 
 protocol AutoCommandOptionDecodable { }
 
 struct RemoveBuildFileCommand: CommandType {
-    private let fromTarget: String
-    private let keepNames: [String]
-    private let matching: String
 
-    struct Option: AutoCommandOptionDecodable {
+    let argument: Argument
+
+    struct Argument: AutoCommandOptionDecodable {
         let fromTarget: String
-        let excluding: String
         let matching: String
+        let excluding: String?
+        let verbose: Bool
+
+        static var shortHandOptions: [PartialKeyPath<Argument>: Character] {
+            return [\Argument.fromTarget: "t", \Argument.excluding: "e", \Argument.matching: "m"]
+        }
+
+        static var shortHandFlags: [KeyPath<Argument, Bool>: Character] {
+            return [\.verbose: "V"]
+        }
     }
 
     // TODO: init(parser: ArgumentParser, printer: PrinterType = Printer(), commandRunner: CommandRunnerType = CommandRunner) throws {
-    init(parser: ArgumentParser) throws {
+    init(argument: Argument) {
+        self.argument = argument
+    }
 
-        let option = try Option(parser: parser)
-        fromTarget = option.fromTarget
-        keepNames = option.excluding.split(separator: ",").map(String.init)
-        matching = option.matching
+    init(parser: ArgumentParser) throws {
+        self.init(argument: try Argument(parser: parser))
     }
 
     func run() throws {
@@ -56,6 +50,10 @@ struct RemoveBuildFileCommand: CommandType {
 
         let project = try XcodeProj(pathString: projectPath)
         let objects = project.pbxproj.objects
+
+        let fromTarget = argument.fromTarget
+        let keepNames = argument.excluding?.split(separator: ",").map(String.init)
+        let matching = argument.matching
 
         let target = objects
             .nativeTargets
@@ -72,11 +70,11 @@ struct RemoveBuildFileCommand: CommandType {
 
         let shouldDelete: (PBXFileReference) -> Bool = { fileReference in
             let nameOrPath = fileReference.name ?? fileReference.path!
-            if self.keepNames.contains(where: { nameOrPath.contains($0) }) {
+            if let keepNames = keepNames, keepNames.contains(where: { nameOrPath.contains($0) }) {
                 return false
             }
 
-            return nameOrPath.contains(self.matching)
+            return nameOrPath.contains(matching)
         }
 
         let buildFilesToDelete: [PBXBuildFile] = sourcesBuildPhase

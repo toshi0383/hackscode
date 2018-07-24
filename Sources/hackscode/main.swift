@@ -17,8 +17,6 @@ enum Command: String {
     }
 }
 
-let commandType: CommandType
-
 guard let command = arguments.lazy.compactMap(Command.init).first else {
     print(
         """
