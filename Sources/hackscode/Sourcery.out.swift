@@ -8,6 +8,50 @@ import CoreCLI
 
 // - MARK: Initializers
 
+extension CreateAndAddNewFileCommand.Argument {
+    private typealias Base = CreateAndAddNewFileCommand.Argument
+
+    private static var autoMappedOptions: [PartialKeyPath<Base>: String] {
+        return [
+            \Base.toTarget: "--to-target",
+            \Base.filepath: "--filepath",
+            \Base.underGroup: "--under-group",
+        ]
+    }
+
+    private static var autoMappedFlags: [KeyPath<Base, Bool>: String] {
+        return [
+:        ]
+    }
+
+    init(parser: ArgumentParserType) throws {
+
+        func getOptionValue(keyPath: PartialKeyPath<Base>) throws -> String {
+            if let short = Base.shortHandOptions[keyPath],
+                let value = try? parser.getValue(forOption: "-\(short)") {
+                return value
+            }
+            let long = Base.autoMappedOptions[keyPath]!
+            return try parser.getValue(forOption: long)
+        }
+
+        func getFlag(keyPath: KeyPath<Base, Bool>) -> Bool {
+            if let short = Base.shortHandFlags[keyPath] {
+                let value = parser.getFlag("-\(short)")
+                if value {
+                    return true
+                }
+            }
+            let long = Base.autoMappedFlags[keyPath]!
+            return parser.getFlag(long)
+        }
+
+        self.toTarget = try getOptionValue(keyPath: \Base.toTarget)
+        self.filepath = try getOptionValue(keyPath: \Base.filepath)
+        self.underGroup = try getOptionValue(keyPath: \Base.underGroup)
+    }
+}
+
 extension RemoveBuildFileCommand.Argument {
     private typealias Base = RemoveBuildFileCommand.Argument
 
@@ -53,3 +97,4 @@ extension RemoveBuildFileCommand.Argument {
         self.verbose = getFlag(keyPath: \Base.verbose)
     }
 }
+

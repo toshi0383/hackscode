@@ -75,3 +75,14 @@ public final class ArgumentParser: ArgumentParserType {
         self.remainder = arguments
     }
 }
+
+public protocol AutoArgumentsDecodable {
+    static var shortHandOptions: [PartialKeyPath<Self>: Character] { get }
+    static var shortHandFlags: [KeyPath<Self, Bool>: Character] { get }
+}
+
+extension AutoArgumentsDecodable {
+    public static var shortHandOptions: [PartialKeyPath<Self>: Character] { return [:] }
+    public static var shortHandFlags: [KeyPath<Self, Bool>: Character] { return [:] }
+}
+

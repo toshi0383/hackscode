@@ -7,13 +7,6 @@
 
 public protocol CommandType {
     func run() throws
-    static var shortHandOptions: [PartialKeyPath<Self>: Character] { get }
-    static var shortHandFlags: [KeyPath<Self, Bool>: Character] { get }
-}
-
-extension CommandType {
-    public static var shortHandOptions: [PartialKeyPath<Self>: Character] { return [:] }
-    public static var shortHandFlags: [KeyPath<Self, Bool>: Character] { return [:] }
 }
 
 public struct CommandError: Error, CustomStringConvertible {

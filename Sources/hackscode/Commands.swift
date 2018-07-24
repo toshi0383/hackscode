@@ -9,13 +9,12 @@ import CoreCLI
 import Foundation
 import xcodeproj
 
-protocol AutoCommandOptionDecodable { }
-
 struct RemoveBuildFileCommand: CommandType {
 
     let argument: Argument
 
-    struct Argument: AutoCommandOptionDecodable {
+    // sourcery: AutoArgumentsDecodable
+    struct Argument: AutoArgumentsDecodable {
         let fromTarget: String
         let matching: String
         let excluding: String?
@@ -102,6 +101,18 @@ struct RemoveBuildFileCommand: CommandType {
 }
 
 struct CreateAndAddNewFileCommand: CommandType {
+
+    // sourcery: AutoArgumentsDecodable
+    struct Argument: AutoArgumentsDecodable {
+        let toTarget: String
+        let filepath: String
+        let underGroup: String
+
+        static var shortHandOptions: [PartialKeyPath<Argument>: Character] {
+            return [\Argument.toTarget: "t", \Argument.filepath: "f", \Argument.underGroup: "g"]
+        }
+    }
+
     func run() throws {
         throw CommandError("Not implemented yet.")
     }

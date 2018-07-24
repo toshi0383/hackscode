@@ -1,7 +1,7 @@
 sources:
   - Sources/hackscode
 templates:
-  - Sources/CoreCLI/AutoCommandOptionDecodables.swifttemplate
+  - Sources/CoreCLI/AutoArgumentsDecodable.swifttemplate
 output:
   Sources/hackscode/Sourcery.out.swift
 

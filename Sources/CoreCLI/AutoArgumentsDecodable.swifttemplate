@@ -5,27 +5,33 @@ import CoreCLI
 // - MARK: Initializers
 
 <%_ for type in types.types { -%>
-<%_ if type.implements["AutoCommandOptionDecodable"] != nil || type.annotations["AutoCommandOptionDecodable"] != nil { -%>
+<%_ if type.implements["AutoArgumentsDecodable"] != nil || type.annotations["AutoArgumentsDecodable"] != nil { -%>
 extension <%= type.name %> {
     private typealias Base = <%= type.name %>
 
     private static var autoMappedOptions: [PartialKeyPath<Base>: String] {
         return [
+            <%_ var count1 = 0 -%>
             <%_ for variable in type.storedVariables { -%>
             <%_ if ["String", "String?"].contains(variable.typeName.name) { -%>
+            <%_ count1 += 1 -%>
             \Base.<%= variable.name %>: "<%= variable.name.enumerated().map({ let c = String($0.element).lowercased(); let isUpper = String($0.element) != c; return $0.offset == 0 ? "--\(c)" : isUpper ? "-\(c)" : c }).joined() %>",
             <%_ } -%>
             <%_ } -%>
+            <%_ if count1 == 0 { -%><%= ":" %><%_ } -%>
         ]
     }
 
     private static var autoMappedFlags: [KeyPath<Base, Bool>: String] {
         return [
+            <%_ var count2 = 0 -%>
             <%_ for variable in type.storedVariables { -%>
             <%_ if variable.typeName.name == "Bool" { -%>
+            <%_ count2 += 1 -%>
             \Base.<%= variable.name %>: "<%= variable.name.enumerated().map({ let c = String($0.element).lowercased(); let isUpper = String($0.element) != c; return $0.offset == 0 ? "--\(c)" : isUpper ? "-\(c)" : c }).joined() %>",
             <%_ } -%>
             <%_ } -%>
+            <%_ if count2 == 0 { -%><%= ":" %><%_ } -%>
         ]
     }
 
@@ -63,5 +69,6 @@ extension <%= type.name %> {
         <%_ } -%>
     }
 }
+
 <%_ } -%>
 <%_ } -%>

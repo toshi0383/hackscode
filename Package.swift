@@ -10,6 +10,6 @@ let package = Package(
     ],
     targets: [
         .target(name: "hackscode", dependencies: ["xcodeproj", "CoreCLI"]),
-        .target(name: "CoreCLI", dependencies: [], exclude: ["Sources/CoreCLI/AutoCommandOptionDecodables.swifttemplate"]),
+        .target(name: "CoreCLI", dependencies: [], exclude: ["Sources/CoreCLI/AutoArgumentsDecodable.swifttemplate"]),
     ]
 )
