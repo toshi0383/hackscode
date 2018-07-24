@@ -5,7 +5,7 @@
 //  Created by Toshihiro Suzuki on 2018/07/24.
 //
 
-protocol ArgumentParserType: class {
+public protocol ArgumentParserType: class {
     var remainder: [String] { get set }
     func getValue(forOption option: String) throws -> String
     func getFlag(_ flag: String) -> Bool
@@ -44,23 +44,23 @@ extension ArgumentParserType {
 }
 
 /// Default ArgumentParser
-final class ArgumentParser: ArgumentParserType {
+public final class ArgumentParser: ArgumentParserType {
 
-    func getValue(forOption option: String) throws -> String {
+    public func getValue(forOption option: String) throws -> String {
 
-        guard let index = parser.remainder.index(of: option) else {
+        guard let index = remainder.index(of: option) else {
             throw CommandError("missing option \(option)")
         }
-        if index + 1 >= parser.remainder.count {
+        if index + 1 >= remainder.count {
             throw CommandError("missing value for option \(option)")
         }
         shift(at: index)
         return shift(at: index)!
     }
 
-    func getFlag(_ flag: String) -> Bool {
+    public func getFlag(_ flag: String) -> Bool {
 
-        if let index = parser.remainder.index(of: flag) {
+        if let index = remainder.index(of: flag) {
             shift(at: index)
             return true
         } else {
@@ -68,10 +68,10 @@ final class ArgumentParser: ArgumentParserType {
         }
     }
 
-    var remainder: [String]
+    public var remainder: [String]
 
     /// - parameter arguments: ProcessInfo.processInfo.arguments
-    init(arguments: [String]) {
+    public init(arguments: [String]) {
         self.remainder = arguments
     }
 }

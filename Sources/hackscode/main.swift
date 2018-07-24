@@ -1,3 +1,4 @@
+import CoreCLI
 import Foundation
 
 let version = "0.1.2"

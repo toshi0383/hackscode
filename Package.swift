@@ -9,6 +9,7 @@ let package = Package(
         .package(url: "https://github.com/xcode-project-manager/xcodeproj", .branchItem("master")),
     ],
     targets: [
-        .target(name: "hackscode", dependencies: ["xcodeproj"]),
+        .target(name: "hackscode", dependencies: ["xcodeproj", "CoreCLI"]),
+        .target(name: "CoreCLI", dependencies: [], exclude: ["Sources/CoreCLI/AutoCommandOptionDecodables.swifttemplate"]),
     ]
 )
