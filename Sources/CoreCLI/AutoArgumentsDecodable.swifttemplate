@@ -58,7 +58,13 @@ extension <%= type.name %> {
         }
 
         func getCommandType() -> CommandType.Type? {
-            return Base.subCommands.first(where: { $0.name == parser.shift() })
+            while !parser.remainder.isEmpty {
+                let arg = parser.shift()
+                if let subCommand = Base.subCommands.first(where: { $0.name == arg }) {
+                    return subCommand
+                }
+            }
+            return nil
         }
 
         <%_ for variable in type.storedVariables { -%>
@@ -79,7 +85,7 @@ extension <%= type.name %> {
         <%_ for variable in type.storedVariables { -%>
         <%_ if variable.typeName.name == "CommandType?" { -%>
         if let type = getCommandType() {
-            self.<%= variable.name %> = try? type.init(arguments: parser.shiftAll())
+            self.<%= variable.name %> = try type.init(arguments: parser.shiftAll())
         } else {
             self.<%= variable.name %> = nil
         }

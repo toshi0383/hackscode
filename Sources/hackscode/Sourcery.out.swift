@@ -47,7 +47,13 @@ extension CreateAndAddNewFileCommand.Argument {
         }
 
         func getCommandType() -> CommandType.Type? {
-            return Base.subCommands.first(where: { $0.name == parser.shift() })
+            while !parser.remainder.isEmpty {
+                let arg = parser.shift()
+                if let subCommand = Base.subCommands.first(where: { $0.name == arg }) {
+                    return subCommand
+                }
+            }
+            return nil
         }
 
         self.toTarget = try getOptionValue(keyPath: \Base.toTarget)
@@ -94,13 +100,19 @@ extension Hackscode.Arguments {
         }
 
         func getCommandType() -> CommandType.Type? {
-            return Base.subCommands.first(where: { $0.name == parser.shift() })
+            while !parser.remainder.isEmpty {
+                let arg = parser.shift()
+                if let subCommand = Base.subCommands.first(where: { $0.name == arg }) {
+                    return subCommand
+                }
+            }
+            return nil
         }
 
         self.version = getFlag(keyPath: \Base.version)
         self.help = getFlag(keyPath: \Base.help)
         if let type = getCommandType() {
-            self.subCommand = try? type.init(arguments: parser.shiftAll())
+            self.subCommand = try type.init(arguments: parser.shiftAll())
         } else {
             self.subCommand = nil
         }
@@ -147,7 +159,13 @@ extension RemoveBuildFileCommand.Argument {
         }
 
         func getCommandType() -> CommandType.Type? {
-            return Base.subCommands.first(where: { $0.name == parser.shift() })
+            while !parser.remainder.isEmpty {
+                let arg = parser.shift()
+                if let subCommand = Base.subCommands.first(where: { $0.name == arg }) {
+                    return subCommand
+                }
+            }
+            return nil
         }
 
         self.fromTarget = try getOptionValue(keyPath: \Base.fromTarget)

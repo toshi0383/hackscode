@@ -11,7 +11,7 @@ import xcodeproj
 
 struct RemoveBuildFileCommand: CommandType {
 
-    static let name: String = "remove-build-file"
+    static let name: String = "remove-build-files"
 
     let argument: Argument
 
