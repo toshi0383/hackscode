@@ -47,8 +47,10 @@ extension CreateNewFile.Argument {
         }
 
         func getCommandType() -> CommandType.Type? {
-            while !parser.remainder.isEmpty {
-                let arg = parser.shift()
+            while let arg = parser.shift() {
+                if let subCommand = Base.shortHandCommands[arg] {
+                    return subCommand
+                }
                 if let subCommand = Base.subCommands.first(where: { $0.name == arg }) {
                     return subCommand
                 }
@@ -102,8 +104,10 @@ extension Hackscode.Arguments {
         }
 
         func getCommandType() -> CommandType.Type? {
-            while !parser.remainder.isEmpty {
-                let arg = parser.shift()
+            while let arg = parser.shift() {
+                if let subCommand = Base.shortHandCommands[arg] {
+                    return subCommand
+                }
                 if let subCommand = Base.subCommands.first(where: { $0.name == arg }) {
                     return subCommand
                 }
@@ -163,8 +167,10 @@ extension RemoveBuildFiles.Argument {
         }
 
         func getCommandType() -> CommandType.Type? {
-            while !parser.remainder.isEmpty {
-                let arg = parser.shift()
+            while let arg = parser.shift() {
+                if let subCommand = Base.shortHandCommands[arg] {
+                    return subCommand
+                }
                 if let subCommand = Base.subCommands.first(where: { $0.name == arg }) {
                     return subCommand
                 }
