@@ -18,6 +18,11 @@ struct Hackscode: CommandType {
         }
     }
 
+    init() throws {
+        let parser = ArgumentParser(arguments: ProcessInfo.processInfo.arguments)
+        self.arguments = try Arguments(parser: parser)
+    }
+
     // MARK: CommandType
 
     func run() throws {
@@ -46,7 +51,7 @@ struct Hackscode: CommandType {
 }
 
 do {
-    try Hackscode(arguments: ProcessInfo.processInfo.arguments).run()
+    try Hackscode().run()
 } catch {
     print(error)
     exit(1)

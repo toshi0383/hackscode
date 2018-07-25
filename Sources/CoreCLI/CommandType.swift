@@ -15,7 +15,7 @@ public protocol CommandType {
     func run() throws
 
     // TODO: init(parser: ArgumentParser, printer: PrinterType = Printer(), commandRunner: CommandRunnerType = CommandRunner) throws {
-    init(arguments: [String]) throws
+    init(parser: ArgumentParserType) throws
 }
 
 extension CommandType {

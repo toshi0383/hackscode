@@ -86,7 +86,7 @@ extension <%= type.name %> {
         <%_ for variable in type.storedVariables { -%>
         <%_ if variable.typeName.name == "CommandType?" { -%>
         if let type = getCommandType() {
-            self.<%= variable.name %> = try type.init(arguments: parser.shiftAll())
+            self.<%= variable.name %> = try type.init(parser: parser)
         } else {
             self.<%= variable.name %> = nil
         }
@@ -103,8 +103,7 @@ extension <%= type.name %> {
     private typealias Base = <%= type.name %>
 
     <%_ if let innerArgumentType = types.types.first(where: { $0.name.hasPrefix("\(type.name).") && $0.implements["AutoArgumentsDecodable"] != nil }), let innerArgumentTypeVariable = type.variables.first(where: { "\(type.name).\($0.typeName.name)" == innerArgumentType.name }) { -%>
-    init(arguments: [String]) throws {
-        let parser = ArgumentParser(arguments: arguments)
+    init(parser: ArgumentParserType) throws {
         self.<%= innerArgumentTypeVariable.name %> = try <%= innerArgumentType.name %>(parser: parser)
     }
 

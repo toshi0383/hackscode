@@ -118,7 +118,7 @@ extension Hackscode.Arguments {
         self.version = getFlag(keyPath: \Base.version)
         self.help = getFlag(keyPath: \Base.help)
         if let type = getCommandType() {
-            self.subCommand = try type.init(arguments: parser.shiftAll())
+            self.subCommand = try type.init(parser: parser)
         } else {
             self.subCommand = nil
         }
@@ -190,8 +190,7 @@ extension RemoveBuildFiles.Argument {
 extension CreateNewFile {
     private typealias Base = CreateNewFile
 
-    init(arguments: [String]) throws {
-        let parser = ArgumentParser(arguments: arguments)
+    init(parser: ArgumentParserType) throws {
         self.argument = try CreateNewFile.Argument(parser: parser)
     }
 
@@ -205,8 +204,7 @@ extension CreateNewFile {
 extension Hackscode {
     private typealias Base = Hackscode
 
-    init(arguments: [String]) throws {
-        let parser = ArgumentParser(arguments: arguments)
+    init(parser: ArgumentParserType) throws {
         self.arguments = try Hackscode.Arguments(parser: parser)
     }
 
@@ -220,8 +218,7 @@ extension Hackscode {
 extension RemoveBuildFiles {
     private typealias Base = RemoveBuildFiles
 
-    init(arguments: [String]) throws {
-        let parser = ArgumentParser(arguments: arguments)
+    init(parser: ArgumentParserType) throws {
         self.argument = try RemoveBuildFiles.Argument(parser: parser)
     }
 
