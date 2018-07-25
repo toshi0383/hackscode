@@ -14,7 +14,7 @@ public protocol ArgumentParserType: class {
 extension ArgumentParserType {
 
     @discardableResult
-    func shift() -> String? {
+    public func shift() -> String? {
         if remainder.isEmpty {
             return nil
         }
@@ -22,7 +22,7 @@ extension ArgumentParserType {
     }
 
     @discardableResult
-    func shift(at index: Int) -> String? {
+    public func shift(at index: Int) -> String? {
         if remainder.isEmpty {
             return nil
         }
@@ -35,7 +35,7 @@ extension ArgumentParserType {
     }
 
     @discardableResult
-    func shiftAll() -> [String] {
+    public func shiftAll() -> [String] {
         let r = remainder
         remainder = []
         return r
@@ -51,7 +51,7 @@ public final class ArgumentParser: ArgumentParserType {
         guard let index = remainder.index(of: option) else {
             throw CommandError("missing option \(option)")
         }
-        if index + 1 >= remainder.count {
+        if index + 1 > remainder.count {
             throw CommandError("missing value for option \(option)")
         }
         shift(at: index)
@@ -75,14 +75,3 @@ public final class ArgumentParser: ArgumentParserType {
         self.remainder = arguments
     }
 }
-
-public protocol AutoArgumentsDecodable {
-    static var shortHandOptions: [PartialKeyPath<Self>: Character] { get }
-    static var shortHandFlags: [KeyPath<Self, Bool>: Character] { get }
-}
-
-extension AutoArgumentsDecodable {
-    public static var shortHandOptions: [PartialKeyPath<Self>: Character] { return [:] }
-    public static var shortHandFlags: [KeyPath<Self, Bool>: Character] { return [:] }
-}
-

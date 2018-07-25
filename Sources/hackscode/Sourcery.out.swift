@@ -24,7 +24,7 @@ extension CreateAndAddNewFileCommand.Argument {
 :        ]
     }
 
-    init(parser: ArgumentParserType) throws {
+    init(parser: ArgumentParserType, subCommands: [CommandType.Type]) throws {
 
         func getOptionValue(keyPath: PartialKeyPath<Base>) throws -> String {
             if let short = Base.shortHandOptions[keyPath],
@@ -46,9 +46,64 @@ extension CreateAndAddNewFileCommand.Argument {
             return parser.getFlag(long)
         }
 
+        func getCommandType() -> CommandType.Type? {
+            return subCommands.first(where: { $0.name == parser.shift() })
+        }
+
         self.toTarget = try getOptionValue(keyPath: \Base.toTarget)
         self.filepath = try getOptionValue(keyPath: \Base.filepath)
         self.underGroup = try getOptionValue(keyPath: \Base.underGroup)
+    }
+}
+
+extension Hackscode.Arguments {
+    private typealias Base = Hackscode.Arguments
+
+    private static var autoMappedOptions: [PartialKeyPath<Base>: String] {
+        return [
+:        ]
+    }
+
+    private static var autoMappedFlags: [KeyPath<Base, Bool>: String] {
+        return [
+            \Base.version: "--version",
+            \Base.help: "--help",
+        ]
+    }
+
+    init(parser: ArgumentParserType, subCommands: [CommandType.Type]) throws {
+
+        func getOptionValue(keyPath: PartialKeyPath<Base>) throws -> String {
+            if let short = Base.shortHandOptions[keyPath],
+                let value = try? parser.getValue(forOption: "-\(short)") {
+                return value
+            }
+            let long = Base.autoMappedOptions[keyPath]!
+            return try parser.getValue(forOption: long)
+        }
+
+        func getFlag(keyPath: KeyPath<Base, Bool>) -> Bool {
+            if let short = Base.shortHandFlags[keyPath] {
+                let value = parser.getFlag("-\(short)")
+                if value {
+                    return true
+                }
+            }
+            let long = Base.autoMappedFlags[keyPath]!
+            return parser.getFlag(long)
+        }
+
+        func getCommandType() -> CommandType.Type? {
+            return subCommands.first(where: { $0.name == parser.shift() })
+        }
+
+        self.version = getFlag(keyPath: \Base.version)
+        self.help = getFlag(keyPath: \Base.help)
+        if let type = getCommandType() {
+            self.subCommand = try? type.init(arguments: parser.shiftAll())
+        } else {
+            self.subCommand = nil
+        }
     }
 }
 
@@ -69,7 +124,7 @@ extension RemoveBuildFileCommand.Argument {
         ]
     }
 
-    init(parser: ArgumentParserType) throws {
+    init(parser: ArgumentParserType, subCommands: [CommandType.Type]) throws {
 
         func getOptionValue(keyPath: PartialKeyPath<Base>) throws -> String {
             if let short = Base.shortHandOptions[keyPath],
@@ -91,9 +146,13 @@ extension RemoveBuildFileCommand.Argument {
             return parser.getFlag(long)
         }
 
+        func getCommandType() -> CommandType.Type? {
+            return subCommands.first(where: { $0.name == parser.shift() })
+        }
+
         self.fromTarget = try getOptionValue(keyPath: \Base.fromTarget)
         self.matching = try getOptionValue(keyPath: \Base.matching)
-        self.excluding = try getOptionValue(keyPath: \Base.excluding)
+        self.excluding = try? getOptionValue(keyPath: \Base.excluding)
         self.verbose = getFlag(keyPath: \Base.verbose)
     }
 }

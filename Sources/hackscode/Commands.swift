@@ -11,6 +11,8 @@ import xcodeproj
 
 struct RemoveBuildFileCommand: CommandType {
 
+    static let name: String = "remove-build-file"
+
     let argument: Argument
 
     // sourcery: AutoArgumentsDecodable
@@ -33,9 +35,11 @@ struct RemoveBuildFileCommand: CommandType {
     init(argument: Argument) {
         self.argument = argument
     }
-
-    init(parser: ArgumentParser) throws {
-        self.init(argument: try Argument(parser: parser))
+    init(parser: ArgumentParserType) throws {
+        self.init(argument: try Argument(parser: parser, subCommands: []))
+    }
+    init(arguments: [String]) throws {
+        try self.init(parser: ArgumentParser(arguments: arguments))
     }
 
     func run() throws {
@@ -101,6 +105,20 @@ struct RemoveBuildFileCommand: CommandType {
 }
 
 struct CreateAndAddNewFileCommand: CommandType {
+
+    static let name: String = "create-new-file"
+
+    let argument: Argument
+
+    init(argument: Argument) {
+        self.argument = argument
+    }
+    init(parser: ArgumentParserType) throws {
+        self.init(argument: try Argument(parser: parser, subCommands: []))
+    }
+    init(arguments: [String]) throws {
+        try self.init(parser: ArgumentParser(arguments: arguments))
+    }
 
     // sourcery: AutoArgumentsDecodable
     struct Argument: AutoArgumentsDecodable {

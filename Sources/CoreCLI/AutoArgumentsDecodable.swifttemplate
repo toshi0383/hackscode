@@ -35,7 +35,7 @@ extension <%= type.name %> {
         ]
     }
 
-    init(parser: ArgumentParserType) throws {
+    init(parser: ArgumentParserType, subCommands: [CommandType.Type]) throws {
 
         func getOptionValue(keyPath: PartialKeyPath<Base>) throws -> String {
             if let short = Base.shortHandOptions[keyPath],
@@ -57,14 +57,32 @@ extension <%= type.name %> {
             return parser.getFlag(long)
         }
 
+        func getCommandType() -> CommandType.Type? {
+            return subCommands.first(where: { $0.name == parser.shift() })
+        }
+
         <%_ for variable in type.storedVariables { -%>
-        <%_ if ["String", "String?"].contains(variable.typeName.name) { -%>
+        <%_ if variable.typeName.name == "String" { -%>
         self.<%= variable.name %> = try getOptionValue(keyPath: \Base.<%= variable.name %>)
+        <%_ } -%>
+        <%_ } -%>
+        <%_ for variable in type.storedVariables { -%>
+        <%_ if variable.typeName.name == "String?" { -%>
+        self.<%= variable.name %> = try? getOptionValue(keyPath: \Base.<%= variable.name %>)
         <%_ } -%>
         <%_ } -%>
         <%_ for variable in type.storedVariables { -%>
         <%_ if variable.typeName.name == "Bool" { -%>
         self.<%= variable.name %> = getFlag(keyPath: \Base.<%= variable.name %>)
+        <%_ } -%>
+        <%_ } -%>
+        <%_ for variable in type.storedVariables { -%>
+        <%_ if variable.typeName.name == "CommandType?" { -%>
+        if let type = getCommandType() {
+            self.<%= variable.name %> = try? type.init(arguments: parser.shiftAll())
+        } else {
+            self.<%= variable.name %> = nil
+        }
         <%_ } -%>
         <%_ } -%>
     }
