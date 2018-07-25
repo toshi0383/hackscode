@@ -1,5 +1,5 @@
 //
-//  CreateAndAddNewFileCommand.swift
+//  CreateNewFile.swift
 //  hackscode
 //
 //  Created by Toshihiro Suzuki on 2018/07/22.
