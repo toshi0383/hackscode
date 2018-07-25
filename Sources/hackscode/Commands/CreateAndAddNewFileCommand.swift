@@ -9,7 +9,6 @@ import CoreCLI
 import Foundation
 import xcodeproj
 
-// sourcery: CommandType
 struct CreateNewFile: CommandType {
 
     let argument: Argument
@@ -19,7 +18,6 @@ struct CreateNewFile: CommandType {
         self.argument = try Argument(parser: parser)
     }
 
-    // sourcery: AutoArgumentsDecodable
     struct Argument: AutoArgumentsDecodable {
         let toTarget: String
         let filepath: String

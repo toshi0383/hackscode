@@ -7,12 +7,10 @@ struct Hackscode: CommandType {
         self.arguments = try Arguments(parser: parser)
     }
 
-    static let name: String = "hackscode"
     let arguments: Arguments
 
     private let version = "0.1.2"
 
-    // sourcery: AutoArgumentsDecodable
     struct Arguments: AutoArgumentsDecodable {
         let version: Bool
         let help: Bool

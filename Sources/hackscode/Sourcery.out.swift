@@ -194,6 +194,15 @@ extension CreateNewFile {
         return "create-new-file"
     }
 }
+// - MARK: Hackscode
+
+extension Hackscode {
+    private typealias Base = Hackscode
+
+    static var name: String {
+        return "hackscode"
+    }
+}
 // - MARK: RemoveBuildFiles
 
 extension RemoveBuildFiles {

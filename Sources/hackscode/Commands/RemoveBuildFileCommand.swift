@@ -9,12 +9,10 @@ import CoreCLI
 import Foundation
 import xcodeproj
 
-// sourcery: CommandType
 struct RemoveBuildFiles: CommandType {
 
     let argument: Argument
 
-    // sourcery: AutoArgumentsDecodable
     struct Argument: AutoArgumentsDecodable {
         let fromTarget: String
         let matching: String
