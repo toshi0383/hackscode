@@ -2,7 +2,7 @@
 
 import CoreCLI
 
-<%_ for type in types.types where type.implements["AutoArgumentsDecodable"] != nil { -%>
+<%_ for type in types.types where type.implements["AutoArgumentsDecodable"] != nil || type.annotations["AutoArgumentsDecodable"] != nil { -%>
 // - MARK: <%= type.name %>
 
 extension <%= type.name %> {
@@ -96,7 +96,7 @@ extension <%= type.name %> {
 }
 
 <%_ } -%>
-<%_ for type in types.types where type.implements["CommandType"] != nil { -%>
+<%_ for type in types.types where type.implements["CommandType"] != nil || type.annotations["CommandType"] != nil { -%>
 // - MARK: <%= type.name %>
 
 extension <%= type.name %> {
