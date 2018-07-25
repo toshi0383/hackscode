@@ -32,14 +32,9 @@ struct RemoveBuildFileCommand: CommandType {
     }
 
     // TODO: init(parser: ArgumentParser, printer: PrinterType = Printer(), commandRunner: CommandRunnerType = CommandRunner) throws {
-    init(argument: Argument) {
-        self.argument = argument
-    }
-    init(parser: ArgumentParserType) throws {
-        self.init(argument: try Argument(parser: parser, subCommands: []))
-    }
     init(arguments: [String]) throws {
-        try self.init(parser: ArgumentParser(arguments: arguments))
+        let parser = ArgumentParser(arguments: arguments)
+        self.argument = try Argument(parser: parser)
     }
 
     func run() throws {
@@ -110,14 +105,9 @@ struct CreateAndAddNewFileCommand: CommandType {
 
     let argument: Argument
 
-    init(argument: Argument) {
-        self.argument = argument
-    }
-    init(parser: ArgumentParserType) throws {
-        self.init(argument: try Argument(parser: parser, subCommands: []))
-    }
     init(arguments: [String]) throws {
-        try self.init(parser: ArgumentParser(arguments: arguments))
+        let parser = ArgumentParser(arguments: arguments)
+        self.argument = try Argument(parser: parser)
     }
 
     // sourcery: AutoArgumentsDecodable

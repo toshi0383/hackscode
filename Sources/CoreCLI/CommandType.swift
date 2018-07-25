@@ -12,14 +12,12 @@ public protocol TopLevelCommandType {
 public protocol CommandType {
     static var name: String { get }
     var shorthandName: String? { get }
-    static var subCommands: [CommandType.Type] { get }
     func run() throws
     init(arguments: [String]) throws
 }
 
 extension CommandType {
     public var shorthandName: String? { return nil }
-    public static var subCommands: [CommandType.Type] { return [] }
 }
 
 public struct CommandError: Error, CustomStringConvertible {

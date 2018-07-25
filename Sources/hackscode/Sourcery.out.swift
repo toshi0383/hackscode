@@ -24,7 +24,7 @@ extension CreateAndAddNewFileCommand.Argument {
 :        ]
     }
 
-    init(parser: ArgumentParserType, subCommands: [CommandType.Type]) throws {
+    init(parser: ArgumentParserType) throws {
 
         func getOptionValue(keyPath: PartialKeyPath<Base>) throws -> String {
             if let short = Base.shortHandOptions[keyPath],
@@ -47,7 +47,7 @@ extension CreateAndAddNewFileCommand.Argument {
         }
 
         func getCommandType() -> CommandType.Type? {
-            return subCommands.first(where: { $0.name == parser.shift() })
+            return Base.subCommands.first(where: { $0.name == parser.shift() })
         }
 
         self.toTarget = try getOptionValue(keyPath: \Base.toTarget)
@@ -71,7 +71,7 @@ extension Hackscode.Arguments {
         ]
     }
 
-    init(parser: ArgumentParserType, subCommands: [CommandType.Type]) throws {
+    init(parser: ArgumentParserType) throws {
 
         func getOptionValue(keyPath: PartialKeyPath<Base>) throws -> String {
             if let short = Base.shortHandOptions[keyPath],
@@ -94,7 +94,7 @@ extension Hackscode.Arguments {
         }
 
         func getCommandType() -> CommandType.Type? {
-            return subCommands.first(where: { $0.name == parser.shift() })
+            return Base.subCommands.first(where: { $0.name == parser.shift() })
         }
 
         self.version = getFlag(keyPath: \Base.version)
@@ -124,7 +124,7 @@ extension RemoveBuildFileCommand.Argument {
         ]
     }
 
-    init(parser: ArgumentParserType, subCommands: [CommandType.Type]) throws {
+    init(parser: ArgumentParserType) throws {
 
         func getOptionValue(keyPath: PartialKeyPath<Base>) throws -> String {
             if let short = Base.shortHandOptions[keyPath],
@@ -147,7 +147,7 @@ extension RemoveBuildFileCommand.Argument {
         }
 
         func getCommandType() -> CommandType.Type? {
-            return subCommands.first(where: { $0.name == parser.shift() })
+            return Base.subCommands.first(where: { $0.name == parser.shift() })
         }
 
         self.fromTarget = try getOptionValue(keyPath: \Base.fromTarget)

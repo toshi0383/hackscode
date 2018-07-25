@@ -35,7 +35,7 @@ extension <%= type.name %> {
         ]
     }
 
-    init(parser: ArgumentParserType, subCommands: [CommandType.Type]) throws {
+    init(parser: ArgumentParserType) throws {
 
         func getOptionValue(keyPath: PartialKeyPath<Base>) throws -> String {
             if let short = Base.shortHandOptions[keyPath],
@@ -58,7 +58,7 @@ extension <%= type.name %> {
         }
 
         func getCommandType() -> CommandType.Type? {
-            return subCommands.first(where: { $0.name == parser.shift() })
+            return Base.subCommands.first(where: { $0.name == parser.shift() })
         }
 
         <%_ for variable in type.storedVariables { -%>
