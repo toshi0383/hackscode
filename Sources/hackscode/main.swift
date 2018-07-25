@@ -2,11 +2,6 @@ import CoreCLI
 import Foundation
 
 struct Hackscode: CommandType {
-    init(arguments: [String]) throws {
-        let parser = ArgumentParser(arguments: arguments)
-        self.arguments = try Arguments(parser: parser)
-    }
-
     let arguments: Arguments
 
     private let version = "0.1.2"
@@ -22,6 +17,8 @@ struct Hackscode: CommandType {
             return ["remove": RemoveBuildFiles.self]
         }
     }
+
+    // MARK: CommandType
 
     func run() throws {
         if arguments.version {

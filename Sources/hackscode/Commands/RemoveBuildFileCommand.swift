@@ -28,11 +28,7 @@ struct RemoveBuildFiles: CommandType {
         }
     }
 
-    // TODO: init(parser: ArgumentParser, printer: PrinterType = Printer(), commandRunner: CommandRunnerType = CommandRunner) throws {
-    init(arguments: [String]) throws {
-        let parser = ArgumentParser(arguments: arguments)
-        self.argument = try Argument(parser: parser)
-    }
+    // MARK: CommandType
 
     func run() throws {
         let curdir = FileManager.default.currentDirectoryPath

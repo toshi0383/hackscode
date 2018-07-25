@@ -13,6 +13,8 @@ public protocol CommandType {
     static var name: String { get }
     var shorthandName: String? { get }
     func run() throws
+
+    // TODO: init(parser: ArgumentParser, printer: PrinterType = Printer(), commandRunner: CommandRunnerType = CommandRunner) throws {
     init(arguments: [String]) throws
 }
 

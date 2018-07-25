@@ -13,11 +13,6 @@ struct CreateNewFile: CommandType {
 
     let argument: Argument
 
-    init(arguments: [String]) throws {
-        let parser = ArgumentParser(arguments: arguments)
-        self.argument = try Argument(parser: parser)
-    }
-
     struct Argument: AutoArgumentsDecodable {
         let toTarget: String
         let filepath: String
@@ -27,6 +22,8 @@ struct CreateNewFile: CommandType {
             return [\Argument.toTarget: "t", \Argument.filepath: "f", \Argument.underGroup: "g"]
         }
     }
+
+    // MARK: CommandType
 
     func run() throws {
         throw CommandError("Not implemented yet.")

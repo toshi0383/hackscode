@@ -190,25 +190,43 @@ extension RemoveBuildFiles.Argument {
 extension CreateNewFile {
     private typealias Base = CreateNewFile
 
+    init(arguments: [String]) throws {
+        let parser = ArgumentParser(arguments: arguments)
+        self.argument = try CreateNewFile.Argument(parser: parser)
+    }
+
     static var name: String {
         return "create-new-file"
     }
 }
+
 // - MARK: Hackscode
 
 extension Hackscode {
     private typealias Base = Hackscode
 
+    init(arguments: [String]) throws {
+        let parser = ArgumentParser(arguments: arguments)
+        self.arguments = try Hackscode.Arguments(parser: parser)
+    }
+
     static var name: String {
         return "hackscode"
     }
 }
+
 // - MARK: RemoveBuildFiles
 
 extension RemoveBuildFiles {
     private typealias Base = RemoveBuildFiles
 
+    init(arguments: [String]) throws {
+        let parser = ArgumentParser(arguments: arguments)
+        self.argument = try RemoveBuildFiles.Argument(parser: parser)
+    }
+
     static var name: String {
         return "remove-build-files"
     }
 }
+
