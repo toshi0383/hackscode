@@ -2,10 +2,9 @@
 
 import CoreCLI
 
-// - MARK: Initializers
+<%_ for type in types.types where type.annotations["AutoArgumentsDecodable"] != nil { -%>
+// - MARK: <%= type.name %>
 
-<%_ for type in types.types { -%>
-<%_ if type.implements["AutoArgumentsDecodable"] != nil || type.annotations["AutoArgumentsDecodable"] != nil { -%>
 extension <%= type.name %> {
     private typealias Base = <%= type.name %>
 
@@ -95,4 +94,14 @@ extension <%= type.name %> {
 }
 
 <%_ } -%>
+<%_ for type in types.types where type.annotations["CommandType"] != nil { -%>
+// - MARK: <%= type.name %>
+
+extension <%= type.name %> {
+    private typealias Base = <%= type.name %>
+
+    static var name: String {
+        return "<%= type.name.enumerated().map({ let c = String($0.element).lowercased(); let isUpper = String($0.element) != c; return $0.offset == 0 ? c : isUpper ? "-\(c)" : c }).joined() %>"
+    }
+}
 <%_ } -%>

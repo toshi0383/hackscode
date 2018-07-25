@@ -6,10 +6,10 @@
 
 import CoreCLI
 
-// - MARK: Initializers
+// - MARK: CreateNewFile.Argument
 
-extension CreateAndAddNewFileCommand.Argument {
-    private typealias Base = CreateAndAddNewFileCommand.Argument
+extension CreateNewFile.Argument {
+    private typealias Base = CreateNewFile.Argument
 
     private static var autoMappedOptions: [PartialKeyPath<Base>: String] {
         return [
@@ -61,6 +61,8 @@ extension CreateAndAddNewFileCommand.Argument {
         self.underGroup = try getOptionValue(keyPath: \Base.underGroup)
     }
 }
+
+// - MARK: Hackscode.Arguments
 
 extension Hackscode.Arguments {
     private typealias Base = Hackscode.Arguments
@@ -119,8 +121,10 @@ extension Hackscode.Arguments {
     }
 }
 
-extension RemoveBuildFileCommand.Argument {
-    private typealias Base = RemoveBuildFileCommand.Argument
+// - MARK: RemoveBuildFiles.Argument
+
+extension RemoveBuildFiles.Argument {
+    private typealias Base = RemoveBuildFiles.Argument
 
     private static var autoMappedOptions: [PartialKeyPath<Base>: String] {
         return [
@@ -175,3 +179,21 @@ extension RemoveBuildFileCommand.Argument {
     }
 }
 
+// - MARK: CreateNewFile
+
+extension CreateNewFile {
+    private typealias Base = CreateNewFile
+
+    static var name: String {
+        return "create-new-file"
+    }
+}
+// - MARK: RemoveBuildFiles
+
+extension RemoveBuildFiles {
+    private typealias Base = RemoveBuildFiles
+
+    static var name: String {
+        return "remove-build-files"
+    }
+}

@@ -17,11 +17,11 @@ struct Hackscode: CommandType {
         let version: Bool
         let help: Bool
         let subCommand: CommandType?
-        static let subCommands: [CommandType.Type] = [RemoveBuildFileCommand.self,
-                                                      CreateAndAddNewFileCommand.self]
+        static let subCommands: [CommandType.Type] = [RemoveBuildFiles.self,
+                                                      CreateNewFile.self]
 
         static var shortHandCommands: [String: CommandType.Type] {
-            return ["remove": RemoveBuildFileCommand.self]
+            return ["remove": RemoveBuildFiles.self]
         }
     }
 
