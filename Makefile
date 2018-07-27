@@ -26,4 +26,4 @@ release:
 	$(cmdshelf) run swiftpm/release.sh hackscode
 
 sourcery:
-	./Pods/Sourcery/bin/sourcery
+	./scripts/run-sourcery

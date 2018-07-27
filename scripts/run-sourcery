@@ -1,0 +1,3 @@
+#!/bin/bash
+TEMPLATE=`find . -name AutoArgumentsDecodable.swifttemplate`
+./Pods/Sourcery/bin/sourcery --sources Sources/hackscode --templates "$TEMPLATE" --output Sources/hackscode/Sourcery.out.swift
