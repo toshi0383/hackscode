@@ -17,6 +17,7 @@ struct RemoveBuildFiles: CommandType {
         let fromTarget: String
         let matching: String
         let excluding: String?
+        let projectRoot: String?
         let verbose: Bool
 
         static var shortHandOptions: [PartialKeyPath<Argument>: Character] {
@@ -31,7 +32,7 @@ struct RemoveBuildFiles: CommandType {
     // MARK: CommandType
 
     func run() throws {
-        let curdir = FileManager.default.currentDirectoryPath
+        let curdir = argument.projectRoot ?? FileManager.default.currentDirectoryPath
         guard let xcodeprojName = (try? FileManager.default.contentsOfDirectory(atPath: curdir))?
             .first(where: { $0.contains("xcodeproj")}) else {
                 throw CommandError("Could not find xcodeproj in current directory: \(curdir)")

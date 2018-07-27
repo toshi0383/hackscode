@@ -135,6 +135,7 @@ extension RemoveBuildFiles.Argument {
             \Base.fromTarget: "--from-target",
             \Base.matching: "--matching",
             \Base.excluding: "--excluding",
+            \Base.projectRoot: "--project-root",
         ]
     }
 
@@ -181,6 +182,7 @@ extension RemoveBuildFiles.Argument {
         self.fromTarget = try getOptionValue(keyPath: \Base.fromTarget)
         self.matching = try getOptionValue(keyPath: \Base.matching)
         self.excluding = try? getOptionValue(keyPath: \Base.excluding)
+        self.projectRoot = try? getOptionValue(keyPath: \Base.projectRoot)
         self.verbose = getFlag(keyPath: \Base.verbose)
     }
 }
