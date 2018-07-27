@@ -102,7 +102,7 @@ extension <%= type.name %> {
 extension <%= type.name %> {
     private typealias Base = <%= type.name %>
 
-    <%_ if let innerArgumentType = types.types.first(where: { $0.name.hasPrefix("\(type.name).") && $0.implements["AutoArgumentsDecodable"] != nil }), let innerArgumentTypeVariable = type.variables.first(where: { "\(type.name).\($0.typeName.name)" == innerArgumentType.name }) { -%>
+    <%_ if let innerArgumentType = types.types.first(where: { $0.name.hasPrefix("\(type.name).") && ($0.implements["AutoArgumentsDecodable"] != nil || $0.implements["AutoArgumentsDecodable"] != nil)  }), let innerArgumentTypeVariable = type.variables.first(where: { "\(type.name).\($0.typeName.name)" == innerArgumentType.name }) { -%>
     init(parser: ArgumentParserType) throws {
         self.<%= innerArgumentTypeVariable.name %> = try <%= innerArgumentType.name %>(parser: parser)
     }
