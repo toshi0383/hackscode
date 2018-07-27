@@ -12,8 +12,9 @@ update:
 build:
 	swift build
 
-bootstrap: build
-	swift package generate-xcodeproj
+bootstrap:
+	pod install # Installing sourcery for swifttemplate support.
+	swift package generate-xcodeproj # Discarding cocoapods side effects, gracefully.
 
 # Needs toshi0383/scripts to be added to cmdshelf's remote
 install:
@@ -23,3 +24,6 @@ release:
 	rm -rf .build/release
 	swift build -c release -Xswiftc -static-stdlib
 	$(cmdshelf) run swiftpm/release.sh hackscode
+
+sourcery:
+	./Pods/Sourcery/bin/sourcery

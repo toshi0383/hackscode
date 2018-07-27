@@ -2,3 +2,7 @@
 /.build
 /Packages
 /*.xcodeproj
+
+# Workaround for CocoaPods
+*.xcworkspace
+Pods/

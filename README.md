@@ -41,5 +41,17 @@ Set the script trigger to Xcode Behavior.
 mint install toshi0383/hackscode
 ```
 
+# Development
+Run following to start development.
+```
+make bootstrap
+```
+
+You will need to run this after you changed command interface.
+```
+make sourcery
+```
+See: https://github.com/toshi0383/CoreCLI
+
 # LICENSE
 MIT
