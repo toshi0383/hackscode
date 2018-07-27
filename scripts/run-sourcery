@@ -1,3 +1,4 @@
 #!/bin/bash
-TEMPLATE=`find . -name AutoArgumentsDecodable.swifttemplate`
-./Pods/Sourcery/bin/sourcery --sources Sources/hackscode --templates "$TEMPLATE" --output Sources/hackscode/Sourcery.out.swift
+TEMPLATE=$(find . -name AutoArgumentsDecodable.swifttemplate)
+CORECLI_SOURCES=$(echo $TEMPLATE | sed 's/AutoArgumentsDecodable.swifttemplate//')
+./Pods/Sourcery/bin/sourcery --sources Sources/hackscode --sources ${CORECLI_SOURCES} --templates "$TEMPLATE" --output Sources/hackscode/Sourcery.out.swift

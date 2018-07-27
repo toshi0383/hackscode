@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "CoreCLI",
+        "repositoryURL": "https://github.com/toshi0383/CoreCLI",
+        "state": {
+          "branch": null,
+          "revision": "f2dd4b0b3a9d5562d3e379f2529ff59e7b8b86cd",
+          "version": "0.1.3"
+        }
+      },
+      {
         "package": "SwiftPM",
         "repositoryURL": "https://github.com/apple/swift-package-manager",
         "state": {

@@ -13,6 +13,8 @@ build:
 	swift build
 
 bootstrap:
+	rm -rf Pods Podfile.lock *.xcodeproj # Cleaning up to avoid cocoapods failing to bootstrap from Podfile.lock 
+	swift package generate-xcodeproj # Creating one for CocoaPods to work.
 	pod install # Installing sourcery for swifttemplate support.
 	swift package generate-xcodeproj # Discarding cocoapods side effects, gracefully.
 
