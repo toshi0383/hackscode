@@ -18,9 +18,9 @@ func getXcodeprojPath(projectRoot: String? = nil) throws -> String {
     return "\(curdir)/\(xcodeprojName)"
 }
 
-func editPbxproj(xcodeprojPath: String, _ edit: (PBXProj) -> ()) throws {
+func editPbxproj(xcodeprojPath: String, _ edit: (PBXProj) throws -> ()) throws {
     let project = try XcodeProj(pathString: xcodeprojPath)
     let pbxproj = project.pbxproj
-    edit(pbxproj)
+    try edit(pbxproj)
     try! pbxproj.write(pathString: "\(xcodeprojPath)/project.pbxproj", override: true)
 }
