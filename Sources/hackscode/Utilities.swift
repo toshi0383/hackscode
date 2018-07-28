@@ -5,6 +5,7 @@
 //  Created by Toshihiro Suzuki on 2018/07/28.
 //
 
+import Basic
 import CoreCLI
 import Foundation
 import xcodeproj

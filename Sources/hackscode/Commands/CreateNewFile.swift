@@ -5,6 +5,7 @@
 //  Created by Toshihiro Suzuki on 2018/07/22.
 //
 
+import Basic
 import CoreCLI
 import Foundation
 import xcodeproj
@@ -30,6 +31,14 @@ struct CreateNewFile: CommandType {
 
     func run() throws {
         let filepath = argument.filepath
+        let fileFullpath: AbsolutePath = {
+            if filepath.hasPrefix("/") {
+                return AbsolutePath(filepath)
+            } else {
+                return currentWorkingDirectory.appending(component: filepath)
+            }
+        }()
+
         let fm = FileManager.default
 
         // Error out if the file already exists.
@@ -57,6 +66,8 @@ struct CreateNewFile: CommandType {
         let xcodeprojPath = try getXcodeprojPath(projectRoot: argument.projectRoot)
 
         try! editPbxproj(xcodeprojPath: xcodeprojPath) { pbxproj in
+            let sourceRoot = AbsolutePath("..", relativeTo: AbsolutePath(xcodeprojPath))
+            let fileref = try pbxproj.rootGroup()?.addFile(at: fileFullpath, sourceRoot: sourceRoot)
         }
     }
 }
