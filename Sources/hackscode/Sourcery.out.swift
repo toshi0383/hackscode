@@ -15,6 +15,7 @@ extension CreateNewFile.Argument {
         return [
             \Base.toTarget: "--to-target",
             \Base.filepath: "--filepath",
+            \Base.projectRoot: "--project-root",
             \Base.underGroup: "--under-group",
         ]
     }
@@ -60,7 +61,8 @@ extension CreateNewFile.Argument {
 
         self.toTarget = try getOptionValue(keyPath: \Base.toTarget)
         self.filepath = try getOptionValue(keyPath: \Base.filepath)
-        self.underGroup = try getOptionValue(keyPath: \Base.underGroup)
+        self.projectRoot = try? getOptionValue(keyPath: \Base.projectRoot)
+        self.underGroup = try? getOptionValue(keyPath: \Base.underGroup)
     }
 }
 

@@ -44,7 +44,7 @@ struct Hackscode: CommandType {
         do {
             try subCommand.run()
         } catch {
-            print(error)
+            print("\(type(of: subCommand).name): \(error)")
             exit(1)
         }
     }
