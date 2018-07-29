@@ -6,3 +6,4 @@
 # Workaround for CocoaPods
 *.xcworkspace
 Pods/
+Podfile.lock
