@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/toshi0383/CoreCLI",
         "state": {
           "branch": null,
-          "revision": "f2dd4b0b3a9d5562d3e379f2529ff59e7b8b86cd",
-          "version": "0.1.3"
+          "revision": "7582c3604a4744de0043eb0a8f22925eaf6e184f",
+          "version": "0.1.7"
         }
       },
       {
@@ -33,7 +33,7 @@
         "repositoryURL": "https://github.com/xcode-project-manager/xcodeproj",
         "state": {
           "branch": "master",
-          "revision": "c5ba9d7b64b4c477d3ca2daed73d44bd3241d0a3",
+          "revision": "bd370fcf0b75875b09bdb83bf5287b755f224b1b",
           "version": null
         }
       }
