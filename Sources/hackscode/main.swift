@@ -4,7 +4,7 @@ import Foundation
 struct Hackscode: CommandType {
     let arguments: Arguments
 
-    private let version = "0.1.6"
+    private let version = "0.2.0"
 
     struct Arguments: AutoArgumentsDecodable {
         let version: Bool
