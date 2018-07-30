@@ -57,8 +57,14 @@ $ hackscode xquick -r HouseSpec.swift  # revert
 ```
 
 # Install
+Mint
 ```
 mint install toshi0383/hackscode
+```
+
+Binary
+```
+bash <(curl -sL https://raw.githubusercontent.com/toshi0383/scripts/master/swiftpm/install.sh) toshi0383/hackscode
 ```
 
 # Development
