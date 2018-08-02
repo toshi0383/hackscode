@@ -56,6 +56,8 @@ $ hackscode xquick -r HouseSpec.swift  # revert
 +                xit(".on") { // xquick
 ```
 
+Note that you can [execute interested test case by changing `it` to `fit`](https://github.com/Quick/Quick/blob/2a84abaedb07e1fb102b10fd17b5e3c52325ba46/Documentation/en-us/QuickExamplesAndGroups.md#temporarily-running-a-subset-of-focused-examples).
+
 # Install
 Mint
 ```
