@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "hackscode",
+    products: [
+        .executable(name: "hackscode", targets: ["hackscode"]),
+    ],
     dependencies: [
         .package(url: "https://github.com/toshi0383/xcodeproj", .branch("instruments-package")),
         .package(url: "https://github.com/toshi0383/CoreCLI", from: "0.1.10"),
