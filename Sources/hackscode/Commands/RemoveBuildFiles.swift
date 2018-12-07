@@ -33,28 +33,19 @@ struct RemoveBuildFiles: CommandType {
 
     func run() throws {
         let xcodeprojPath = try getXcodeprojPath(projectRoot: argument.projectRoot)
-        try! editPbxproj(xcodeprojPath: xcodeprojPath) { pbxproj in
-            let objects = pbxproj.objects
+        try editPbxproj(xcodeprojPath: xcodeprojPath) { pbxproj in
 
             let fromTarget = argument.fromTarget
             let keepNames = argument.excluding?.split(separator: ",").map(String.init)
             let matching = argument.matching
 
-            let target = objects
-                .nativeTargets
-                .first { $0.value.name == fromTarget }!
-                .value
+            let target = pbxproj.nativeTargets
+                .first { $0.name == fromTarget }!
 
-            let sourcesBuildPhase = target
-                //    .sourcesBuildPhase() Fixme: not working correctly
-                .buildPhasesReferences
-                .compactMap {
-                    objects.buildPhases[$0] as? PBXSourcesBuildPhase
-                }
-                .first!
+            let sourcesBuildPhase = try! target.sourcesBuildPhase()!
 
-            let shouldDelete: (PBXFileReference) -> Bool = { fileReference in
-                let nameOrPath = fileReference.name ?? fileReference.path!
+            let shouldDelete: (PBXFileElement) -> Bool = { fileElement in
+                let nameOrPath = fileElement.name ?? fileElement.path!
                 if let keepNames = keepNames, keepNames.contains(where: { nameOrPath.contains($0) }) {
                     return false
                 }
@@ -63,10 +54,10 @@ struct RemoveBuildFiles: CommandType {
             }
 
             let buildFilesToDelete: [PBXBuildFile] = sourcesBuildPhase
-                .fileReferences
-                .compactMap { objects.buildFiles[$0] }
+                .files
                 .compactMap {
-                    if let fileReference = objects.fileReferences[$0.fileReference!], shouldDelete(fileReference) {
+
+                    if let fileElement = $0.file, shouldDelete(fileElement) {
                         return $0
                     } else {
                         return nil
@@ -74,11 +65,10 @@ struct RemoveBuildFiles: CommandType {
             }
 
             // Delete from buildFiles
-            buildFilesToDelete
-                .forEach {
-                    if let index = objects.buildFiles.index(forKey: $0.reference) {
-                        objects.buildFiles.remove(at: index)
-                    }
+            for (i, buildFile) in sourcesBuildPhase.files.enumerated().reversed() {
+                if buildFilesToDelete.contains(buildFile) {
+                    sourcesBuildPhase.files.remove(at: i)
+                }
             }
         }
     }
