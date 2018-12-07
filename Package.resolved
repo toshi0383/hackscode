@@ -57,7 +57,7 @@
       },
       {
         "package": "xcodeproj",
-        "repositoryURL": "https://github.com/xcode-project-manager/xcodeproj",
+        "repositoryURL": "https://github.com/tuist/xcodeproj",
         "state": {
           "branch": "master",
           "revision": "d74e1ccbea3386f4de4d36cabb71f3050dd0ab99",
