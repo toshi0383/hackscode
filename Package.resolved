@@ -57,10 +57,10 @@
       },
       {
         "package": "xcodeproj",
-        "repositoryURL": "https://github.com/toshi0383/xcodeproj",
+        "repositoryURL": "https://github.com/tuist/xcodeproj",
         "state": {
-          "branch": "instruments-package",
-          "revision": "81ebf357d4fa48e58024744b26ec087fb770e95c",
+          "branch": "master",
+          "revision": "41b693efdf33e1245df26fa3cae282e60bfd96df",
           "version": null
         }
       }
