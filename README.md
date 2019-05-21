@@ -23,7 +23,7 @@ on run
         set sourceName1 to (get name of window 1)
 
         try
-            do shell script "hackscode remove-build-files --from-target AbemaTVTests --matching Spec.swift --excluding " & sourceName1 & " --project-root " & projectFolder
+            do shell script "hackscode remove-build-files --from-target AbemaTVTests --matching UI.*Spec.swift --excluding " & sourceName1 & " --project-root " & projectFolder
             display notification "👌 Ignored all specs except " & sourceName1 with title "Hackscode"
         on error errStr number errorNumber
             display notification "🛑 " & errStr & " (" & errorNumber & ")"
