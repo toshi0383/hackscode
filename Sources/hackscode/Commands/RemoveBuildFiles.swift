@@ -50,11 +50,15 @@ struct RemoveBuildFiles: CommandType {
                     return false
                 }
 
-                return nameOrPath.contains(matching)
+                if nameOrPath.range(of: "(.*)\(matching)(.*)", options: .regularExpression) != nil {
+                    return true
+                } else {
+                    return false
+                }
             }
 
             let buildFilesToDelete: [PBXBuildFile] = sourcesBuildPhase
-                .files
+                .files!
                 .compactMap {
 
                     if let fileElement = $0.file, shouldDelete(fileElement) {
@@ -65,9 +69,9 @@ struct RemoveBuildFiles: CommandType {
             }
 
             // Delete from buildFiles
-            for (i, buildFile) in sourcesBuildPhase.files.enumerated().reversed() {
+            for (i, buildFile) in sourcesBuildPhase.files!.enumerated().reversed() {
                 if buildFilesToDelete.contains(buildFile) {
-                    sourcesBuildPhase.files.remove(at: i)
+                    sourcesBuildPhase.files!.remove(at: i)
                 }
             }
         }
