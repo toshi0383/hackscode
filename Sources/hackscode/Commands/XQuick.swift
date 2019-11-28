@@ -1,10 +1,3 @@
-//
-//  XQuick.swift
-//  hackscode
-//
-//  Created by Toshihiro Suzuki on 2018/07/30.
-//
-
 import CoreCLI
 import Foundation
 import ShellOut

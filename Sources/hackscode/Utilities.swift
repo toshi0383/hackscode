@@ -1,13 +1,6 @@
-//
-//  Utilities.swift
-//  hackscode
-//
-//  Created by Toshihiro Suzuki on 2018/07/28.
-//
-
 import CoreCLI
 import Foundation
-import xcodeproj
+import XcodeProj
 
 func getXcodeprojPath(projectRoot: String? = nil) throws -> String {
     let curdir = projectRoot ?? FileManager.default.currentDirectoryPath

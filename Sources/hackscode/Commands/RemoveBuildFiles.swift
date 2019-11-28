@@ -1,13 +1,6 @@
-//
-//  RemoveBuildFiles.swift
-//  hackscode
-//
-//  Created by Toshihiro Suzuki on 2018/07/22.
-//
-
 import CoreCLI
 import Foundation
-import xcodeproj
+import XcodeProj
 
 struct RemoveBuildFiles: CommandType {
 
