@@ -31,8 +31,10 @@ struct DumpBuildFiles: CommandType {
             }
         }()
 
-        for (i, target) in targetsToDump.enumerated() {
-            print("## \(target.name)")
+        let sorted = targetsToDump.sorted { $0.name < $1.name }
+
+        for (i, target) in sorted.enumerated() {
+            print("## \(i) \(target.name)")
             let sourcesBuildPhase = try! target.sourcesBuildPhase()!
             let sourcefiles = sourcesBuildPhase.files!
             if sourcefiles.isEmpty {
