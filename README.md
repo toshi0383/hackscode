@@ -36,6 +36,20 @@ Set the script trigger to Xcode Behavior.
 
 ![Xcode Behavior](https://camo.qiitausercontent.com/02b1e04f2d663055e427dcfad0aa754b065bf058/68747470733a2f2f71696974612d696d6167652d73746f72652e73332e616d617a6f6e6177732e636f6d2f302f33353030382f62343838383034662d636133392d656132662d303132612d6433656262326330306636622e706e67)
 
+## dump-build-files
+
+```
+$ hackscode dump-build-files --targets hackscode
+## hackscode
+  CreateNewFile.swift
+  DumpBuildFiles.swift
+  RemoveBuildFiles.swift
+  XQuick.swift
+  Utilities.swift
+  main.swift
+  zzz.Sourcery.out.swift
+```
+
 # Install
 Mint
 ```

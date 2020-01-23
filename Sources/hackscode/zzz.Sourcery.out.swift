@@ -69,6 +69,65 @@ extension CreateNewFile.Argument {
     }
 }
 
+// - MARK: DumpBuildFiles.Argument
+
+extension DumpBuildFiles.Argument {
+    private typealias Base = DumpBuildFiles.Argument
+
+    private static var autoMappedOptions: [PartialKeyPath<Base>: String] {
+        return [
+            \Base.targets: "--targets",
+            \Base.projectRoot: "--project-root",
+        ]
+    }
+
+    private static var autoMappedFlags: [KeyPath<Base, Bool>: String] {
+        return [
+:        ]
+    }
+
+    init(parser: ArgumentParserType) throws {
+
+        func getOptionValue(keyPath: PartialKeyPath<Base>) throws -> String {
+            if let short = Base.shortHandOptions[keyPath],
+                let value = try? parser.getValue(forOption: "-\(short)") {
+                return value
+            }
+            let long = Base.autoMappedOptions[keyPath]!
+            return try parser.getValue(forOption: long)
+        }
+
+        func getFlag(keyPath: KeyPath<Base, Bool>) -> Bool {
+            if let short = Base.shortHandFlags[keyPath] {
+                let value = parser.getFlag("-\(short)")
+                if value {
+                    return true
+                }
+            }
+            let long = Base.autoMappedFlags[keyPath]!
+            return parser.getFlag(long)
+        }
+
+        func getCommandType() -> CommandType.Type? {
+            for (i, arg) in parser.remainder.enumerated() {
+                if let subCommand = Base.shortHandCommands[arg] {
+                    parser.shift(at: i)
+                    return subCommand
+                }
+                if let subCommand = Base.subCommands.first(where: { $0.name == arg }) {
+                    parser.shift(at: i)
+                    return subCommand
+                }
+            }
+
+            return Base.defaultSubCommand
+        }
+
+        self.targets = try? getOptionValue(keyPath: \Base.targets)
+        self.projectRoot = try? getOptionValue(keyPath: \Base.projectRoot)
+    }
+}
+
 // - MARK: Hackscode.Arguments
 
 extension Hackscode.Arguments {
@@ -271,6 +330,20 @@ extension CreateNewFile {
 
     static var name: String {
         return "create-new-file"
+    }
+}
+
+// - MARK: DumpBuildFiles
+
+extension DumpBuildFiles {
+    private typealias Base = DumpBuildFiles
+
+    init(parser: ArgumentParserType) throws {
+        self.argument = try DumpBuildFiles.Argument(parser: parser)
+    }
+
+    static var name: String {
+        return "dump-build-files"
     }
 }
 

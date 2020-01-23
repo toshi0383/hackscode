@@ -4,18 +4,19 @@ import Foundation
 struct Hackscode: CommandType {
     let arguments: Arguments
 
-    private let version = "0.4.0"
+    private let version = "0.5.0"
 
     struct Arguments: AutoArgumentsDecodable {
         let version: Bool
         let help: Bool
         let subCommand: CommandType?
         static let subCommands: [CommandType.Type] = [RemoveBuildFiles.self,
+                                                      DumpBuildFiles.self,
                                                       CreateNewFile.self,
                                                       Xquick.self]
 
         static var shortHandCommands: [String: CommandType.Type] {
-            return ["remove": RemoveBuildFiles.self]
+            return ["remove": RemoveBuildFiles.self, "dump": DumpBuildFiles.self]
         }
     }
 
